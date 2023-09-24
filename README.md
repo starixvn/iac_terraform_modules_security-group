@@ -2,8 +2,6 @@
 
 Terraform module which creates [EC2 security group within VPC](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html) on AWS.
 
-[![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md)
-
 ## Features
 
 This module aims to implement **ALL** combinations of arguments supported by AWS and latest stable version of Terraform:
@@ -11,13 +9,13 @@ This module aims to implement **ALL** combinations of arguments supported by AWS
 * [VPC endpoint prefix lists](http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/vpc-endpoints.html) (use data source [aws_prefix_list](https://www.terraform.io/docs/providers/aws/d/prefix_list.html))
 * Access from source security groups
 * Access from self
-* Named rules ([see the rules here](https://github.com/terraform-aws-modules/terraform-aws-security-group/blob/master/rules.tf))
-* Named groups of rules with ingress (inbound) and egress (outbound) ports open for common scenarios (eg, [ssh](https://github.com/terraform-aws-modules/terraform-aws-security-group/tree/master/modules/ssh), [http-80](https://github.com/terraform-aws-modules/terraform-aws-security-group/tree/master/modules/http-80), [mysql](https://github.com/terraform-aws-modules/terraform-aws-security-group/tree/master/modules/mysql), see the whole list [here](https://github.com/terraform-aws-modules/terraform-aws-security-group/blob/master/modules/README.md))
+* Named rules ([see the rules here](https://github.com/gitlab.nexdev.net/iac-terraform/terraform-aws-security-group/blob/master/rules.tf))
+* Named groups of rules with ingress (inbound) and egress (outbound) ports open for common scenarios (eg, [ssh](https://github.com/gitlab.nexdev.net/iac-terraform/terraform-aws-security-group/tree/master/modules/ssh), [http-80](https://github.com/gitlab.nexdev.net/iac-terraform/terraform-aws-security-group/tree/master/modules/http-80), [mysql](https://github.com/gitlab.nexdev.net/iac-terraform/terraform-aws-security-group/tree/master/modules/mysql), see the whole list [here](https://github.com/gitlab.nexdev.net/iac-terraform/terraform-aws-security-group/blob/master/modules/README.md))
 * Conditionally create security group and/or all required security group rules.
 
-Ingress and egress rules can be configured in a variety of ways. See [inputs section](#inputs) for all supported arguments and [complete example](https://github.com/terraform-aws-modules/terraform-aws-security-group/tree/master/examples/complete) for the complete use-case.
+Ingress and egress rules can be configured in a variety of ways. See [inputs section](#inputs) for all supported arguments and [complete example](https://github.com/gitlab.nexdev.net/iac-terraform/terraform-aws-security-group/tree/master/examples/complete) for the complete use-case.
 
-If there is a missing feature or a bug - [open an issue](https://github.com/terraform-aws-modules/terraform-aws-security-group/issues/new).
+If there is a missing feature or a bug - [open an issue](https://github.com/gitlab.nexdev.net/iac-terraform/terraform-aws-security-group/issues/new).
 
 ## Terraform versions
 
@@ -31,14 +29,14 @@ If you are using Terraform 0.11 you can use versions `v2.*`.
 
 There are two ways to create security groups using this module:
 
-1. [Specifying predefined rules (HTTP, SSH, etc)](https://github.com/terraform-aws-modules/terraform-aws-security-group#security-group-with-predefined-rules)
-1. [Specifying custom rules](https://github.com/terraform-aws-modules/terraform-aws-security-group#security-group-with-custom-rules)
+1. [Specifying predefined rules (HTTP, SSH, etc)](https://github.com/gitlab.nexdev.net/iac-terraform/terraform-aws-security-group#security-group-with-predefined-rules)
+1. [Specifying custom rules](https://github.com/gitlab.nexdev.net/iac-terraform/terraform-aws-security-group#security-group-with-custom-rules)
 
 ### Security group with predefined rules
 
 ```hcl
 module "web_server_sg" {
-  source = "terraform-aws-modules/security-group/aws//modules/http-80"
+  source = "gitlab.nexdev.net/iac-terraform/security-group/aws//modules/http-80"
 
   name        = "web-server"
   description = "Security group for web-server with HTTP ports open within VPC"
@@ -52,7 +50,7 @@ module "web_server_sg" {
 
 ```hcl
 module "vote_service_sg" {
-  source = "terraform-aws-modules/security-group/aws"
+  source = "gitlab.nexdev.net/iac-terraform/security-group/aws"
 
   name        = "user-service"
   description = "Security group for user-service with custom ports open within VPC, and PostgreSQL publicly open"
@@ -86,7 +84,7 @@ When you need to specify computed value inside security group rule argument you 
 
 ```hcl
 module "http_sg" {
-  source = "terraform-aws-modules/security-group/aws"
+  source = "gitlab.nexdev.net/iac-terraform/security-group/aws"
   # omitted for brevity
 }
 
@@ -130,7 +128,7 @@ Sometimes you need a way to conditionally create a security group. If you're usi
 ```hcl
 # This security group will not be created
 module "vote_service_sg" {
-  source = "terraform-aws-modules/security-group/aws"
+  source = "gitlab.nexdev.net/iac-terraform/security-group/aws"
 
   create = false
   # ... omitted
@@ -139,16 +137,16 @@ module "vote_service_sg" {
 
 ## Examples
 
-* [Complete Security Group example](https://github.com/terraform-aws-modules/terraform-aws-security-group/tree/master/examples/complete) shows all available parameters to configure security group.
-* [Security Group "Rules Only" example](https://github.com/terraform-aws-modules/terraform-aws-security-group/tree/master/examples/complete) shows how to manage just rules of a security group that is created outside.
-* [HTTP Security Group example](https://github.com/terraform-aws-modules/terraform-aws-security-group/tree/master/examples/http) shows more applicable security groups for common web-servers.
-* [Disable creation of Security Group example](https://github.com/terraform-aws-modules/terraform-aws-security-group/tree/master/examples/disabled) shows how to disable creation of security group.
-* [Dynamic values inside Security Group rules example](https://github.com/terraform-aws-modules/terraform-aws-security-group/tree/master/examples/dynamic) shows how to specify values inside security group rules (data-sources and variables are allowed).
-* [Computed values inside Security Group rules example](https://github.com/terraform-aws-modules/terraform-aws-security-group/tree/master/examples/computed) shows how to specify computed values inside security group rules (solution for `value of 'count' cannot be computed` problem).
+* [Complete Security Group example](https://github.com/gitlab.nexdev.net/iac-terraform/terraform-aws-security-group/tree/master/examples/complete) shows all available parameters to configure security group.
+* [Security Group "Rules Only" example](https://github.com/gitlab.nexdev.net/iac-terraform/terraform-aws-security-group/tree/master/examples/complete) shows how to manage just rules of a security group that is created outside.
+* [HTTP Security Group example](https://github.com/gitlab.nexdev.net/iac-terraform/terraform-aws-security-group/tree/master/examples/http) shows more applicable security groups for common web-servers.
+* [Disable creation of Security Group example](https://github.com/gitlab.nexdev.net/iac-terraform/terraform-aws-security-group/tree/master/examples/disabled) shows how to disable creation of security group.
+* [Dynamic values inside Security Group rules example](https://github.com/gitlab.nexdev.net/iac-terraform/terraform-aws-security-group/tree/master/examples/dynamic) shows how to specify values inside security group rules (data-sources and variables are allowed).
+* [Computed values inside Security Group rules example](https://github.com/gitlab.nexdev.net/iac-terraform/terraform-aws-security-group/tree/master/examples/computed) shows how to specify computed values inside security group rules (solution for `value of 'count' cannot be computed` problem).
 
 ## How to add/update rules/groups?
 
-Rules and groups are defined in [rules.tf](https://github.com/terraform-aws-modules/terraform-aws-security-group/blob/master/rules.tf). Run `update_groups.sh` when content of that file has changed to recreate content of all automatic modules.
+Rules and groups are defined in [rules.tf](https://github.com/gitlab.nexdev.net/iac-terraform/terraform-aws-security-group/blob/master/rules.tf). Run `update_groups.sh` when content of that file has changed to recreate content of all automatic modules.
 
 ## Known issues
 
